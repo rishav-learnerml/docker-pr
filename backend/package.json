@@ -1,0 +1,30 @@
+{
+  "name": "nodejs-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js",
+    "build": "npx tsc -b",
+    "dev": "npm run volume && npm run network && npm run mongo && npm run backend",
+    "backend": "docker rm -f node_backend 2>/dev/null || true && docker run -d --name node_backend --network users_app_network -p 3000:3000 users_node_image",
+    "network": "docker network inspect users_app_network >/dev/null 2>&1 || docker network create users_app_network",
+    "volume": "docker volume inspect users_mongo_backup >/dev/null 2>&1 || docker volume create users_mongo_backup",
+    "mongo": "docker rm -f mongodbusers 2>/dev/null || true && docker run -d --name mongodbusers -v users_mongo_backup:/data/db --network users_app_network mongo"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/mongoose": "^5.11.96",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1"
+  }
+}
