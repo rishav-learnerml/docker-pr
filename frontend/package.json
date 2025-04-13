@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "docker-build":"docker build -t frontend_image",
     "docker":"docker run -d --name vite_ui -p 5173:80 frontend_image"
   },
   "dependencies": {
